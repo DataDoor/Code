@@ -17,10 +17,10 @@ conn = pyodbc.connect(
     )
 
 # Variables that contains the user credentials to access Twitter API 
-twitter_access_token = '122365194-9QOZCeNPsX0P3f3DLAZomCOZUjCmuzwcAgslHJGF'
-twitter_access_secret = 'MXo0sJECrWJa15JaiJTHuu3KaOTXzyyTaNgL2seFVy8TE'
-twitter_consumer_key = 'RB3t1sJwOIT4z5VCp0IaxDaaq'
-twitter_consumer_secret = 'fwIDUuaipptUqR50OQ9vuenNFff1jWj9Gj3nNQo2iQm8xIWSpl'
+twitter_access_token = 'xxxxxxxxxxxxxxxxxxxxxx'
+twitter_access_secret = 'xxxxxxxxxxxxxxxxxxxxxx'
+twitter_consumer_key = 'xxxxxxxxxxxxxxxxxxxxxx'
+twitter_consumer_secret = 'xxxxxxxxxxxxxxxxxxxxxx'
 
 
 consumer = oauth.Consumer(key=twitter_consumer_key, secret=twitter_consumer_secret)
@@ -28,10 +28,27 @@ access_token = oauth.Token(key=twitter_access_token, secret=twitter_access_secre
 client = oauth.Client(consumer,access_token)
 
 
-twitter_timeline_endpoint = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=g3lder&count=2'
+twitter_timeline_endpoint = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_namescreenname&count=1'
 
 response, data = client.request(twitter_timeline_endpoint)
 
 tweets = json.loads(data)
 for tweet in tweets:
-    print(data)
+    tweetsdata = str(data)
+    #print(tweetsdata)
+
+    cursor = conn.cursor()    
+
+    SQLCommand = ("INSERT INTO Twitter(TwitterJson) VALUES (?)")    
+    Values = [tweetsdata]   
+
+    #Processing Query    
+    cursor.execute(SQLCommand,Values)     
+
+    #Commiting any pending transaction to the database.    
+    conn.commit()    
+
+    #closing connection    
+    print("Data Successfully Inserted")   
+
+conn.close()  
