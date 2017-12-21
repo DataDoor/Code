@@ -1,0 +1,111 @@
+/*MODIFY THE SYSTEM DATABASE TO REMOVE DEFAULTS AND PERCENTAGE GROWTH*/
+
+/*MODIFY MODEL DATABASE*/
+ALTER DATABASE MODEL SET RECOVERY SIMPLE;
+GO
+ALTER DATABASE MODEL MODIFY FILE (NAME = modeldev, FILEGROWTH = 100MB)
+GO
+ALTER DATABASE MODEL MODIFY FILE (NAME = modellog, FILEGROWTH = 100MB)
+GO
+
+
+/*MODIFY MSDB DATABASE*/
+ALTER DATABASE MSDB SET RECOVERY SIMPLE;
+GO
+ALTER DATABASE MSDB MODIFY FILE (NAME = msdbdata, FILEGROWTH = 100MB)
+GO
+
+ALTER DATABASE MSDB MODIFY FILE (NAME = msdblog, FILEGROWTH = 100MB)
+GO
+
+/*MODIFY MASTER DATABASE*/
+ALTER DATABASE MASTER SET RECOVERY SIMPLE;
+GO
+ALTER DATABASE MASTER MODIFY FILE (NAME = master, FILEGROWTH = 100MB)
+GO
+
+ALTER DATABASE MASTER MODIFY FILE (NAME = mastlog, FILEGROWTH = 100MB)
+GO
+
+
+
+/*SET OPTION CONFIGURATION*/
+
+--SELECT * FROM sys.configurations
+
+
+EXEC sp_configure 'show advanced options',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'optimize for ad hoc workloads',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'backup compression default',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'Ole Automation Procedures',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'xp_cmdshell',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'remote admin connections',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sp_configure 'Ad Hoc Distributed Queries',1
+GO
+RECONFIGURE WITH OVERRIDE
+EXEC sys.sp_configure 'contained database authentication',1
+GO
+RECONFIGURE WITH OVERRIDE
+GO
+EXEC sys.sp_configure 'Agent XPs', 1
+GO
+RECONFIGURE WITH OVERRIDE
+GO
+
+
+
+
+
+/*MAXDOP AND MEMORY*/
+
+DECLARE @cpu_Countdop INT, @sqlmemory INT
+
+SELECT 
+	@cpu_Countdop=cpu_count, 
+	@sqlmemory=convert(int,(physical_memory_kb/1024)-1024)
+FROM sys.dm_os_sys_info dosi
+
+
+EXEC sp_configure 'max server memory', @sqlmemory; -- change to #GB * 1024, leave 2 GB per system for OS, 4GB if over 16GB RAM
+RECONFIGURE WITH OVERRIDE;
+
+EXEC sp_configure 'max degree of parallelism', @cpu_countdop;
+RECONFIGURE WITH OVERRIDE;
+
+
+
+/*SET RECOMMENDED TRACES*/
+
+/*TRACE FLAG 3226 - REMOVE LOG BACKUP ENTRIES FROM ERRORLOG */
+DBCC TRACEON (3226,-1)
+
+/*TRACE FLAG 1118 – FULL EXTENTS ONLY*/
+DBCC TRACEON (1117, -1)
+
+/*TRACE FLAG 1117 – GROW ALL FILES IN A FILEGROUP EQUALLY*/
+DBCC TRACEON (1118, -1)
+
+/*TRACE FLAG 1222 & 1204 - DEADLOCKS*/
+DBCC TRACEON (1222, -1);
+DBCC TRACEON (1204, -1)
+
+/***(These also need to be added to startup trace flags in SSCM)*/
+
+
+
+
+
+
+
