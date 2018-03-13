@@ -33,13 +33,15 @@ select @@servername as server_name,
     coalesce(object_name(ST.objectid, ST.dbid), '<none>') as [object_name],
     qs.query_hash,
     qs.execution_count,
-    executions as total_executions_for_query,
-    SUBSTRING(ST.TEXT,(QS.statement_start_offset + 2) / 2,
+    executions as total_executions_for_query
+   , qs.total_elapsed_time / 1000000 total_elapsed_time_in_S
+   , qs.last_elapsed_time / 1000000  last_elapsed_time_in_S
+	,SUBSTRING(ST.TEXT,(QS.statement_start_offset + 2) / 2,
         (CASE 
             WHEN QS.statement_end_offset = -1  THEN LEN(CONVERT(NVARCHAR(MAX),ST.text)) * 2
             ELSE QS.statement_end_offset
-            END - QS.statement_start_offset) / 2) as sql_text,
-    qp.query_plan
+            END - QS.statement_start_offset) / 2) as sql_text
+	,qp.query_plan
 	,qs.plan_handle
 from sys.dm_exec_query_stats qs
 join frequent_queries fq
@@ -51,7 +53,6 @@ where pa.attribute = 'dbid'
 order by fq.executions desc,
     fq.query_hash,
     qs.execution_count desc
-option (recompile)
 
 
 
