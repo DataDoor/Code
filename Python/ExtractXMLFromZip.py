@@ -6,14 +6,17 @@ import zipfile, os, shutil
 
 #One level down
 
-filePath = '\\\\DT014\\AcquiredContent\\WJE'
-xmlFileStorePath = '\\\\DT014\\AcquiredContent\\XmlFiles\\WJE'
+filePath = '\\\\LP324\\DataShare\\ContentExtract\\Zipped'
+upzipPath = '\\\\LP324\\DataShare\\ContentExtract\\UnZipped'
 
 print('EXTRACT FILES FROM ZIP')
+
 for zipFileName in os.listdir(filePath):
-    zipFileExtract = zipfile.ZipFile(filePath+'\\'+zipFileName)
-    zipFileExtract.extractall(filePath)
+
+    zipFileExtract = zipfile.ZipFile(f'{filePath}\\{zipFileName}')
+    zipFileExtract.extractall(upzipPath)
     zipFileExtract.close()
+
 print('EXTRACT FROM ZIP COMPLETED')
 
 # print('MOVE XML TO XML FILE STORE')
