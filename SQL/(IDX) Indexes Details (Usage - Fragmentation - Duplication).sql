@@ -267,7 +267,8 @@ WHERE i.type_desc = 'HEAP'
 SELECT DISTINCT ius.user_seeks
 	,ius.user_scans
 	,ius.user_lookups
-	,ius.user_updates OBJECT_NAME(o.object_id)
+	,ius.user_updates
+	,OBJECT_NAME(o.object_id) 
 FROM.sys.indexes i
 INNER JOIN sys.objects o ON i.object_id = o.object_id
 INNER JOIN sys.partitions p ON i.object_id = p.object_id
