@@ -7,8 +7,7 @@ conn = pyodbc.connect(
     r'DRIVER={ODBC Driver 13 for SQL Server};'
     r'SERVER=localhost;'
     r'DATABASE=dumpDB;'
-    r'UID=python;'
-    r'PWD=Python') 
+    r'Trusted_Connection=yes;'
 
 #OPEN DATABASE CONNECTION
 print('Opening dbConnection')
@@ -17,19 +16,19 @@ cursor = conn.cursor()
 
 
 #Extract SubmissionID data
-submissionSQLCommand = ("SELECT SubmissionID FROM ScholarOne.Submissions")
+submissionSQLCommand = ("SELECT column FROM table")
                 
 #Process query 
 cursor.execute(submissionSQLCommand)
-submissionData = cursor.fetchall ()
-submissionIDList = []
+columndata = cursor.fetchall ()
+columndataList = []
 
-for row in submissionData:
-    submissionIDList.append(row[0])
+for row in columndata:
+    columndataList.append(row[0])
 
 
-for subid in submissionIDList:
-    print(subid)
+for did in columndataList:
+    print(did)
 
 
 
