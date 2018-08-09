@@ -5,8 +5,7 @@ conn = pyodbc.connect(
     r'DRIVER={ODBC Driver 13 for SQL Server};'
     r'SERVER=localhost;'
     r'DATABASE=dumpDB;'
-    r'UID=python;'
-    r'PWD=Python'
+    r'Trusted_Connection=yes;'
     )
 
 print("Enter any value")    

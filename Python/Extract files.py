@@ -49,12 +49,12 @@ print('XML FILE MOVE COMPLETED')
 
 
 #Unzip parameters
-currentZipLoc = '\\\\LP324\\DataShare\\ContentExtract\\Zipped'
-finalUpZipLoc = '\\\\LP324\\DataShare\\ContentExtract\\UnZipped'
+currentZipLoc = '\\\\LocalHost\\DataShare\\ContentExtract\\Zipped'
+finalUpZipLoc = '\\\\LocalHost\\DataShare\\ContentExtract\\UnZipped'
 
 
 #Xml Extract parameters
-currentFolderPath = '\\\\LP324\\DataShare\\ContentExtract\\UnZipped'
-xmlStorePath = '\\\\LP324\\DataShare\\ContentExtract\\XML'
+currentFolderPath = '\\\\LocalHost\\DataShare\\ContentExtract\\UnZipped'
+xmlStorePath = '\\\\LocalHost\\DataShare\\ContentExtract\\XML'
 
 
