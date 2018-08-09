@@ -10,16 +10,16 @@ import pyodbc
 conn = pyodbc.connect(
     r'DRIVER={ODBC Driver 13 for SQL Server};'
     r'SERVER=localhost;'
-    r'DATABASE=dumpDB;'
-    r'UID=python;'
-    r'PWD=Python'
+    r'DATABASE=DB;'
+    r'Trusted_Connection=yes;'
+
     ) 
 
 ##SET VARIABLES
 
-url = 'http://alfuat.emerald.ixxus.io/alfresco/s/emerald/Cases/people'
-apiuser = 'integration'
-apipass = 'integration'
+url = ''
+apiuser = ''
+apipass = ''
 
 
 ##CALL GET API
