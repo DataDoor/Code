@@ -7,7 +7,7 @@ older than a specified number of days
 $limit = (Get-Date).AddDays(-14)
 
 #Backup paths to cycle through
-$backuppaths = "\\Path1\","\\Path2" #Simply remove all but one from the array to just delete from one path.
+$backuppaths = "\\Path","\\Path" #Simply remove all but one from the array to just delete from one path.
 
 #loop to delete files
 foreach($path in $backuppaths)
