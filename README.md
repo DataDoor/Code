@@ -4,4 +4,4 @@ This repo hold code which I've used or found useful for dirrerent technologies t
 
 - SQL
 - Python
-- C#
+- Powershell
