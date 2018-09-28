@@ -125,7 +125,7 @@ $targetfoldername  = "usage"
 $dltargetfolder = "/$targetfoldername/"
 
 
-$uploadfilelist = Get-ChildItem $filesourcepath -Filter *.txt 
+$uploadfilelist = Get-ChildItem $filesourcepath -Filter *.csv 
 
 
 foreach ($file in $uploadfilelist)
@@ -135,7 +135,7 @@ foreach ($file in $uploadfilelist)
 $localfile = $filesourcepath+$file
 $remotepath = $dltargetfolder+$file
 
-#Import files from local to datalake
+##Import files from local to datalake
 Import-AzureRmDataLakeStoreItem `
     -AccountName $dlaccount `
     -Path $localfile  `
