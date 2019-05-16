@@ -14,7 +14,7 @@ FROM (
 SELECT em.*
 FROM SSISDB.CATALOG.event_messages em(NOLOCK)
 --WHERE em.operation_id = (SELECT MAX(execution_id) FROM SSISDB.catalog.executions) --Find currently executing details
-WHERE em.operation_id = (SELECT MAX(execution_id) FROM SSISDB.CATALOG.executions WHERE folder_name = '') --Find last execution at folder level
+WHERE em.operation_id = (SELECT MAX(execution_id) FROM SSISDB.CATALOG.executions WHERE folder_name = 'CRM_NORTHSTAR') --Find last execution at folder level
 --WHERE em.operation_id = (SELECT MAX(execution_id) FROM SSISDB.CATALOG.executions WHERE folder_name = 'SSIS Catalog folder name' AND project_name = 'Project name') --Find last execution at project level
 ) q
 /* Put in whatever WHERE predicates you might like*/
